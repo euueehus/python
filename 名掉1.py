@@ -33,12 +33,13 @@ while True:
             else:
                 Pos_name = Polls_Cand_L_name + Polls_Cand_L_name
                 Pos_BL = "F"
+                Pos_number += 0.5
 
         print(
             "準確率是",
             Pos_number,
             "/ ",
             Polls_ratio_left,
-            Pos_number / Polls_ratio_left * 100,
+            round(Pos_number / Polls_ratio_left * 100, 2),
             "%",
         )
