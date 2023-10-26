@@ -21,15 +21,19 @@ while True:
     else:
         print("e")
 """
-"""''
+
+
+i = 0
 while True:
     e = int(input("數字"))
     if e % 2 != 0:
         print("坤數")
     else:
         print("偶數")
-        """ ""
 
+    i += 1
+    if i == 3:
+        break
 
 # for i in range(3):
 #   turtle.forward(100)
@@ -41,7 +45,7 @@ while True:
 # turtle.stamp()蓋章
 
 # turtle.penup()提筆
-
+"""
 import turtle
 
 turtle.speed(0)
@@ -55,3 +59,4 @@ for i in range(200):
 
 
 turtle.done()
+"""

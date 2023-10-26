@@ -19,8 +19,9 @@
 # a = input() 括號中的字是提示字
 # print(type(a)) input()輸入的字會變字串
 # print("你輸的字:" + a)
-
+"""'
 a = input("打年齡")
 a = int(a) + 10
 print(type(a))
 print("你ㄉ年紀:" + str(a))
+"""
