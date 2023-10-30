@@ -22,7 +22,7 @@ while True:
         print("e")
 """
 
-
+"""
 i = 0
 while True:
     e = int(input("數字"))
@@ -34,7 +34,7 @@ while True:
     i += 1
     if i == 3:
         break
-
+"""
 # for i in range(3):
 #   turtle.forward(100)
 #   turtle.right(90)
@@ -44,8 +44,7 @@ while True:
 # turtle.done()
 # turtle.stamp()蓋章
 
-# turtle.penup()提筆
-"""
+
 import turtle
 
 turtle.speed(0)
@@ -58,5 +57,4 @@ for i in range(200):
     turtle.forward(i)
 
 
-turtle.done()
-"""
+turtle.done

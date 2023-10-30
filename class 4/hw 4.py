@@ -53,20 +53,16 @@ while True:
     c = 100
     無法構成三角形
     """
-    h = 0
-    a = int(input("底"))
-    b = int(input("高"))
-    c = int(input("長"))
     while True:
-        try:
-            d = a * b / 2
-            e = a + b + c
-            f = "周長"
-            g = "面坤"
-            print(g, d)
-            print(f, e)
-        except:
-            print("無法構成三角形")
-        h += 1
-        if h == 1:
-            break
+        a = int(input("長"))
+        b = int(input("長"))
+        c = int(input("長"))
+
+        if a + b > c and a + c > b and b + c > a:
+            print(f"周長:{(a+b+c)}")
+
+            p = (a + b + c) / 2
+            h = (p * (p - a) * (p - b) * (p - c)) ** 0.5
+            print(f"面坤:{h}")
+        else:
+            print("x")
