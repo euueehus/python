@@ -2,8 +2,8 @@ while True:
     Polls_Cand_W_name = input("在這份名調中，贏家候選人的名字")
     Polls_Cand_L_name = input("在這份名調中，輸家候選人的名字")
 
-    Polls_Cand_W_Vrate = int(input("輸入贏家候選人得票率(輸入百分比，不用加%號)"))
-    Polls_Cand_L_Vrate = int(input("輸入輸家候選人得票率(輸入百分比，不用加%號)"))
+    Polls_Cand_W_Vrate = float(input("輸入贏家候選人得票率(輸入百分比，不用加%號)"))
+    Polls_Cand_L_Vrate = float(input("輸入輸家候選人得票率(輸入百分比，不用加%號)"))
 
     Polls_ratio = int(input("輸入此民調抽樣比(輸入百分比，不用加%號)"))
 
