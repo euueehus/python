@@ -6,3 +6,4 @@ while True:
         break
 
         # break=停止
+print()
