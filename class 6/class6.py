@@ -18,11 +18,12 @@ for O in range(e,0,-1):
 else:
     print("到了")
 """
-"""
 
+"""'
 while True:
     print("1.app 2. O 3. n 4 . close")
     O = input("n")
+    O = int(O)
     if O == "1":
         print("app")
     elif O == "2":
