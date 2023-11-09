@@ -16,7 +16,6 @@ while 1:
 
     W1 = W
     L1 = L
-
     P1 = P
 
     Polls_Cand_W_Vrate = W1
