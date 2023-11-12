@@ -6,7 +6,7 @@ for i in range(1, e + 1):
         print(i)
 """
 e = int(input("x"))
-for s in range(e - 1):
-    print(f" " * s)
-    print(f"*" * s)
-    print(s * "*")
+for s in range(e):
+    print(" " * (e - 1 - s) + "*" * (s * 2 + 1))
+for s in range(e):
+    print(" " * (e - 1) + "*")
