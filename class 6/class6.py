@@ -19,7 +19,7 @@ else:
     print("到了")
 """
 
-"""'
+
 while True:
     print("1.app 2. O 3. n 4 . close")
     O = input("n")
@@ -37,7 +37,7 @@ while True:
         print(
             "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
         )
-"""
+
 """
 O = int(input("eeeeeeeeee"))
 
