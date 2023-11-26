@@ -46,7 +46,7 @@ while 1:
             Pos_number += 0.5
     P_n_2 = Pos_number / Polls_ratio_left * 100
 
-    print(W, L, P)
+    print('贏家得票率:{}輸家得票率:)
     print(Pos_number, round(T, 0))
     print(round(P_n), round(P_n_2))
     if P_n == P_n_2:

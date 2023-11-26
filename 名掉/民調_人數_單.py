@@ -29,6 +29,7 @@ while True:
 
         else:
             Pos_name = Polls_Cand_L_name + Polls_Cand_L_name
+            Pos_number += 0.5
             Pos_BL = "F"
 
         print(x_compare, ",", y_compare, ",", Pos_name, ",", Pos_BL)

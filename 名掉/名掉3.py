@@ -18,11 +18,14 @@ while True:
     for i in alist_1:
         T += 1
         alist_2 = ["W", "M", "L"]
-        for k in range(100 - i):
+        for k in range(100 - round(i)):
             for h1, h2 in enumerate(alist_2):
+                print(h1)
                 h1 += 1
-                exec(alist_2.pop({alist_2[T - 1]}))
+                # exec(alist_2.pop({alist_2[T - 1])})
+                alist_2.remove(alist_2[T - 1])
                 for num in ["1", "100"]:
                     TT += 1
-                    exec("ano_{} = alist_2[{}]", format(TT, TT - 1))
+                    print(TT)
+                    exec("ano_{} = alist_2[{}]".format(TT, TT - 1))
                     exec("ano_{} = {}".format(TT, num))
