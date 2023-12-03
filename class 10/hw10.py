@@ -16,21 +16,23 @@ s = ["1", "2", "3"]
 l = ["1新增餐點", "2移除餐點", "3提交菜單"]
 while True:
     print(f"目前以點的餐:_{list}")
-    print(l)
     try:
         A = int(input("自"))
-        if A == 1:
-            O = input("餐")
-            list.append(O)
-        elif A == 2:
-            t = input("12312312312312312312312312312")
-        if t in list:
-            list.remove(t)
-        elif A == 3:
-            print(list)
-            l = input("eadhjkafioahauikfjaklshfagfuiasfhj")
-            print(list.count(l))
-            print("已提交")
-            break
     except:
         print("幹")
+        continue
+
+    if A == 1:
+        print(l)
+        O = input("餐")
+        list.append(O)
+    elif A == 2:
+        t = input("12312312312312312312312312312")
+        while t in list:
+            list.remove(t)
+    elif A == 3:
+        print(s[0] + ":" + str(list.count(s[0])))
+        print(s[1] + ":" + str(list.count(s[1])))
+        print(s[2] + ":" + str(list.count(s[2])))
+        print("已提交")
+        break

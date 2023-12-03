@@ -61,6 +61,12 @@ while True:
     elif ans == 8:
         order_list.sort(reverse=True)
         print(order_list)
+    elif ans == 9:
+        order_list.reverse()
+        print(order_list)
+    elif ans == 10:
+        eee = input("?????")
+        order_list.index(eee)
     elif ans == len(juices_list):
         print("~~系統關閉~~")
         break
