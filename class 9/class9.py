@@ -42,11 +42,25 @@ while True:
             print("已移除")
         else:
             print("沒有")
+
     elif ans == 3:
         l = int(input("位子"))
         m = input("餐")
         order_list.insert(l, m)
-
+    elif ans == 4:
+        ssss = input("?????????????")
+        print(order_list.count(ssss))
+    elif ans == 5:
+        order_list.pop()
+    elif ans == 6:
+        pp = int(input("jklbnhhjkjklhjjjkjjkhjkhjkhj"))
+        order_list.pop(pp)
+    elif ans == 7:
+        order_list.sort()
+        print(order_list)
+    elif ans == 8:
+        order_list.sort(reverse=True)
+        print(order_list)
     elif ans == len(juices_list):
         print("~~系統關閉~~")
         break
