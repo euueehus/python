@@ -16,6 +16,7 @@ s = ["1", "2", "3"]
 l = ["1新增餐點", "2移除餐點", "3提交菜單"]
 while True:
     print(f"目前以點的餐:_{list}")
+    print(f"菜單:_{l}")
     try:
         A = int(input("自"))
     except:
@@ -23,7 +24,7 @@ while True:
         continue
 
     if A == 1:
-        print(l)
+        print(s)
         O = input("餐")
         list.append(O)
     elif A == 2:
