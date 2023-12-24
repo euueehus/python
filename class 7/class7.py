@@ -14,15 +14,18 @@ while 1:
         print("big")
        """
 """
+
 L = [1,2,3]
 print(L)
 L = [1,2,3,'hello',"world"]
 print(L)
 L = [1,2,3,'hello',"world",[4,5,6]]
 print(L)
+"""
 
 
 
+   """  
 l = [ "a","b","c","d","e","f","g","h","i","j" ]
 print(l)
 print(l[0])
@@ -39,10 +42,9 @@ for i in range(len(l)):
     print(l[i])
     for i in l :
         print(i)
-        
-"""
-"""
-juices_list = ["蘋果汁", "柳橙汁", "葡萄汁", "可樂", "系統關閉"]如要改選只改這個就好
+   
+
+juices_list = ["蘋果汁", "柳橙汁", "葡萄汁", "可樂", "系統關閉"]  # 如要改選只改這個就好
 while True:
     for i in range(len(juices_list)):
         print(str(i + 1) + ". " + juices_list[i])
@@ -58,7 +60,10 @@ while True:
         print("輸入錯誤查無此果汁，請重新輸入")
     else:
         print("您點的商品是" + juices_list[ans - 1])
-        """
+
+   """  
+
+"""
 while True:
     print("1. 蘋果汁")
     print("2. 柳橙汁")
@@ -76,3 +81,5 @@ while True:
         break
     else:
         print("輸入錯誤查無此果汁，請重新輸入")
+"""
+"""
