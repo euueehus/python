@@ -1,6 +1,9 @@
 # 新增指令
-# def hello(我可以放變數):
-#   print("d"+str(變數))
+def hello(我可以放變數):
+    print("d" + str(我可以放變數))
+
+
+print(hello)
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # 有輸入有傳回值得函數
 # def my_min(a,b):
@@ -39,15 +42,16 @@
 # print(s(e))
 #
 # 當函式有預設值變化時,應將變數放在函示參數的最後
-def fun(a, b, c=0, d=0):
-    print("a=", a)
-    print("b=", b)
-    print("c=", c)
-    print("d=", d)
-
-
-fun(1, 2)
-fun(1, 2, 3)
-fun(1, 2, 3, 4)
-# 必須照順序
-fun(a=4, b=4)
+# def fun(a, b, c=0, d=0):
+#    print("a=", a)
+#    print("b=", b)
+#    print("c=", c)
+#    print("d=", d)
+#
+#
+# fun(1, 2)
+# fun(1, 2, 3)
+# fun(1, 2, 3, 4)
+## 必須照順序
+# fun(a=4, b=4)
+#
