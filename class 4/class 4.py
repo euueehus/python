@@ -7,6 +7,7 @@ elif p == "5678":
 else:
     print("XXXXXXXXXXXX")
 """
+
 """
 while True:
     s = int(input("成績"))
@@ -47,7 +48,9 @@ while True:
 
 import turtle
 
-turtle.speed(0)
+turtle.speed(
+    -9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+)
 turtle.color("blue")
 turtle.shape("circle")
 turtle.penup()

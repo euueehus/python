@@ -17,6 +17,8 @@ EX:
 你的BMI為31.14186851211073
 體重過重
 """
+
+"""
 while True:
     i = 0
     while True:
@@ -33,7 +35,8 @@ while True:
             i += 1
             if i == 1:
                 break
-    """
+                """
+"""
     輸入三角形三邊(存入變數a, b, c中) 
     判斷是否能構成三角形(利用邊長運算進行判斷，可以上網搜尋公式)
     是三角形:則顯示面積和周長
@@ -53,16 +56,16 @@ while True:
     c = 100
     無法構成三角形
     """
-    while True:
-        a = int(input("長"))
-        b = int(input("長"))
-        c = int(input("長"))
+while True:
+    a = int(input("長"))
+    b = int(input("長"))
+    c = int(input("長"))
 
-        if a + b > c and a + c > b and b + c > a:
-            print(f"周長:{(a+b+c)}")
+    if a + b > c and a + c > b and b + c > a:
+        print(f"周長:{(a+b+c)}")
 
-            p = (a + b + c) / 2
-            h = (p * (p - a) * (p - b) * (p - c)) ** 0.5
-            print(f"面坤:{h}")
-        else:
-            print("x")
+        p = (a + b + c) / 2
+        h = (p * (p - a) * (p - b) * (p - c)) ** 0.5
+        print(f"面坤:{h}")
+    else:
+        print("x")

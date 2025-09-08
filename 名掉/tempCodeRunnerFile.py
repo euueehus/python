@@ -1,54 +1,16 @@
-import random
-
-Pos_number = 0
-while 1:
-    input()
-    W = random.randint(51, 99)
-    L = 100 - W
-    P = random.randint(1, 100)
-    X = W - L
-
-    T = round(((100 - P) / 2 + 0.5 + (P / 20) * (X / 10)), 0)
-    P_n = round(((100 - P) / 2 + 0.5 + (P / 20) * (X / 10)), 0) / (100 - P) * 100
-
-    if P_n >= 100:
-        P_n = 100
-
-    W1 = W
-    L1 = L
-    P1 = P
-
-    Polls_Cand_W_Vrate = W1
-    Polls_Cand_L_Vrate = L1
-
-    Polls_ratio = P1
-
-    Pos_number = 0
-    Polls_ratio_left = 100 - Polls_ratio
-    x = Polls_ratio_left
-    y = 0
-
-    for k in range(Polls_ratio_left):
-        x_compare = Polls_Cand_W_Vrate * Polls_ratio / 100 + x
-        y_compare = Polls_Cand_L_Vrate * Polls_ratio / 100 + y
-        x -= 1
-        y += 1
-        if x_compare > y_compare:
-            Pos_number += 1
-            Pos_BL = "T"
-
-        elif x_compare < y_compare:
-            Pos_BL = "F"
-
-        else:
-            Pos_BL = "F"
-            Pos_number += 0.5
-    P_n_2 = Pos_number / Polls_ratio_left * 100
-
-    print(W, L, P)
-    print(Pos_number, round(T, 0))
-    print(round(P_n), round(P_n_2))
-    if P_n == P_n_2:
-        print("T")
+juices_list = ["蘋果汁", "柳橙汁", "葡萄汁", "可樂", "系統關閉"]  # 如要改選只改這個就好
+while True:
+    for i in range(len(juices_list)):
+        print(str(i + 1) + ". " + juices_list[i])
+    try:
+        ans = int(input("請輸入編號:"))
+    except:
+        print("輸入錯誤查無此果汁，請重新輸入")
+        continue
+    if ans == len(juices_list):
+        print("~~系統關閉~~")
+        break
+    elif ans > len(juices_list) or ans <= 0:
+        print("輸入錯誤查無此果汁，請重新輸入")
     else:
-        print("F")
+        print("您點的商品是" + juices_list[ans - 1])

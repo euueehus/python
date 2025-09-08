@@ -25,7 +25,7 @@ print(L)
 
 
 
-   """  
+"""  
 l = [ "a","b","c","d","e","f","g","h","i","j" ]
 print(l)
 print(l[0])
@@ -82,4 +82,4 @@ while True:
     else:
         print("輸入錯誤查無此果汁，請重新輸入")
 """
-"""
+

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Noa的Kards小站 - 很多解牌</title>
+    <style>
+        body {
+            background-color: #A9A9A9;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #0000ff;
+            margin-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        img {
+            width: 25%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            margin-right: 20px;
+        }
+
+        .deck {
+            flex: 1;
+            color: #0000ff;
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .codebox {
+            background-color: #e8e8e8;
+            border: 1px dashed #0000ff;
+            padding: 10px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 14px;
+            color: #333;
+            border-radius: 5px;
+            word-break: break-word;
+        }
+
+        .card-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            grid-template-columns: repeat(auto-fill, minmax(px, 1fr));
+            gap: 15px;
+            padding: 15px;
+
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            padding: 1px;
+
+        }
+
+        .card img {
+            width: 50%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .card-name {
+            margin-top: 8px;
+            font-weight: bold;
+            color: #0000ff;
+            font-size: 14px;
+        }
+
+        .button-area {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #0000ff;
+            background-color: #fff;
+            border: 2px solid #0000ff;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #0000ff;
+            color: #fff;
+        }
+
+        .card-name span {
+            display: block;
+            font-weight: normal;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .rarity-normal {
+            color: #A9A9A9;
+            /* 普通：灰色 */
+        }
+
+        .rarity-special {
+            color: #C0C0C0;
+            /* 特殊：銀色 */
+        }
+
+        .rarity-limited {
+            color: #DAA520;
+            /* 限定：深黃色 */
+        }
+
+        .rarity-elite {
+            color: #FFD700;
+            /* 精英：金色 */
+        }
+    </style>
+</head>
+
+<body>
+    <h2>很多解牌~</h2>
+
+    <div class="container">
+
+        <div class="deck">
+            <strong>Major power:</strong> USA<br>
+            <strong>Ally:</strong> Britain<br>
+            <strong>HQ:</strong> 瑟堡<br><br>
+
+            <strong>USA:</strong><br>
+            3x (0K) 脅迫<br>
+            1x (1K) 狂怒<br>
+            2x (1K) 為了自由<br>
+            4x (2K) 戰爭機器<br>
+            2x (4K) 第 2 密歇根州步兵團<br>
+            1x (4K) 第 48 裝甲步兵團<br>
+            2x (4K) 激勵部隊<br>
+            1x (4K) 轟炸機黑手黨<br>
+            3x (4K) M4 雪曼<br>
+            3x (5K) 戰爭債券<br>
+            2x (5K) M4 螢火蟲 PL<br>
+            2x (6K) 龍卷師 幹....優質帥哥喔<br>
+            1x (9K) 海上入侵<br><br>
+
+            <strong>Britain:</strong><br>
+            2x (1K) 貝克街分隊<br>
+            3x (1K) 兩難困境<br>
+            3x (1K) 第 9 突擊隊<br>
+            3x (3K) HX 175 護航隊<br>
+            1x (5K) 邱吉爾 Mk IV<br>
+
+            <div class="codebox">%%52|1gbCmNpBpD;bqgLouqGr6r9;08bPd4ohoxsC;bK</div>
+        </div>
+    </div>
+
+    <h2>卡牌圖鑑</h2>
+    <div class="card-gallery">
+
+        <div class="card-gallery">
+            <div class="card"><img src="/static/戰爭機器.jpg">
+                <div class="card-name">戰爭機器
+                    <span class="rarity-normal">普通</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/M4雪曼.jpg">
+                <div class="card-name">M4 雪曼
+                    <span class="rarity-normal">普通</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/M4 螢火蟲 PL.jpg">
+                <div class="card-name">M4 螢火蟲 PL
+                    <span class="rarity-limited">限定</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/第 2 密歇根州步兵團.jpg">
+                <div class="card-name">第 2 密歇根州步兵團
+                    <span class="rarity-special">特殊</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/第 48 裝甲步兵團.jpg">
+                <div class="card-name">第 48 裝甲步兵團
+                    <span class="rarity-special">特殊</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/激勵部隊.jpg">
+                <div class="card-name">激勵部隊
+                    <span class="rarity-limited">限定</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/轟炸機黑手黨.jpg">
+                <div class="card-name">轟炸機黑手黨
+                    <span class="rarity-special">特殊</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/龍卷師.jpg">
+                <div class="card-name">龍卷師
+                    <span class="rarity-special">特殊</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/海上入侵.jpg">
+                <div class="card-name">海上入侵
+                    <span class="rarity-elite">精英</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/貝克街分隊.jpg">
+                <div class="card-name">貝克街分隊
+                    <span class="rarity-special">特殊</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/兩難困境.jpg">
+                <div class="card-name">兩難困境
+                    <span class="rarity-normal">普通</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/第 9 突擊隊.jpg">
+                <div class="card-name">第 9 突擊隊
+                    <span class="rarity-normal">普通</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/HX 175 護航隊.jpg">
+                <div class="card-name">HX 175 護航隊
+                    <span class="rarity-normal">普通</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/邱吉爾 Mk IV.jpg">
+                <div class="card-name">邱吉爾 Mk IV
+                    <span class="rarity-normal">普通</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/狂怒.jpg">
+                <div class="card-name">狂怒
+                    <span class="rarity-limited">限定</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/為了自由.jpg">
+                <div class="card-name">為了自由
+                    <span class="rarity-special">特殊</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/脅迫.jpg">
+                <div class="card-name">脅迫
+                    <span class="rarity-normal">普通</span>
+                </div>
+            </div>
+            <div class="card"><img src="/static/戰爭債券.jpg">
+                <div class="card-name">戰爭債券
+                    <span class="rarity-limited">限定</span>
+                </div>
+            </div>
+            <div class="button-area">
+                <button onclick="location.href='/Kards 美國'">回去</button>
+            </div>
+</body>
+
+</html>
