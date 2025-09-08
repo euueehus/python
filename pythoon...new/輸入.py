@@ -1,7 +1,7 @@
 import pyautogui
 import time
 
-type = pyautogui.prompt("輸入什麼")
+
 x = int(pyautogui.prompt("多少次輸入記得複製"))
 t = float(pyautogui.prompt("輸入間隔"))
 time.sleep(1)
