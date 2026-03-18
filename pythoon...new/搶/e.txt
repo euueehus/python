@@ -1,0 +1,3 @@
+ACCOUNT = "euueehus"
+PASSWORD = "25792867  "
+"https://kktix.kktix.cc/events/virtualevent"

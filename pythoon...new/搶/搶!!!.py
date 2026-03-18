@@ -1,151 +1,244 @@
-from selenium import webdriver
+# ============================================================
+#  KKTIX 搶票程式
+#  使用前請先 pip install undetected-chromedriver selenium
+# ============================================================
+
+import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, WebDriverException
+from selenium.common.exceptions import TimeoutException
 import winsound
 import time
 
-# 配置路徑
-chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
-chromedriver_path = (
-    r"C:\Users\user\Downloads\chromedriver-win64\chromedriver-win64\chromedriver.exe"
-)
+# ============================================================
+#  ★ 設定區 — 只需要改這裡 ★
+# ============================================================
 
-# 配置 Selenium
-service = Service(chromedriver_path, log_path="chromedriver.log")
-options = webdriver.ChromeOptions()
-options.binary_location = chrome_path
-options.add_argument("--log-level=3")
-options.add_argument("--disable-gpu")
-# options.add_argument('--headless')  # 無頭模式（穩定後啟用）
+ACCOUNT = "euueehus"
+PASSWORD = "25792867"
 
-try:
-    driver = webdriver.Chrome(service=service, options=options)
-except Exception as e:
-    print(f"無法啟動瀏覽器：{e}")
-    exit(1)
+# 活動購票頁網址（開賣後貼上，例如 https://kktix.com/events/XXXXXX/registrations/new）
+TICKET_URL = "https://kktix.com/events/a7b3b60c/registrations/new"
+
+# 想搶的票種關鍵字（依優先順序），程式會選第一個有庫存的
+TICKET_KEYWORDS = ["VIP", "搖滾", "A區", "B區", "C區"]
+
+# 購票數量
+TICKET_QTY = 2
+
+# ============================================================
 
 
-def play_alert_sound():
-    """播放提醒蜂鳴聲"""
+def beep(times=3):
+    for _ in range(times):
+        try:
+            winsound.Beep(1000, 400)
+            time.sleep(0.1)
+        except Exception:
+            print("\a")  # fallback
+
+
+def wait_for_enter(msg):
+    beep()
+    input(f"\n{'='*50}\n{msg}\n按 Enter 繼續...\n{'='*50}\n")
+
+
+def setup_driver():
+    options = uc.ChromeOptions()
+    options.add_argument("--log-level=3")
+    options.add_argument("--disable-gpu")
+    # undetected_chromedriver 會自動處理反偵測，不需要額外設定
+    driver = uc.Chrome(options=options, version_main=145)
+    return driver
+
+
+def login(driver):
+    print("→ 前往登入頁面...")
+    driver.get("https://kktix.com/users/sign_in")
+    wait = WebDriverWait(driver, 10)
+
+    # 填帳號
+    acc = wait.until(EC.presence_of_element_located((By.ID, "user_login")))
+    acc.clear()
+    acc.send_keys(ACCOUNT)
+
+    # 填密碼
+    pwd = driver.find_element(By.ID, "user_password")
+    pwd.clear()
+    pwd.send_keys(PASSWORD)
+
+    # 點登入
+    driver.find_element(By.NAME, "commit").click()
+    print("→ 登入中...")
+
+    # 等待登入成功（網址離開 sign_in 頁）
     try:
-        for _ in range(3):
-            winsound.Beep(1000, 500)
-    except Exception as e:
-        print(f"播放聲音失敗：{e}")
+        WebDriverWait(driver, 10).until(
+            EC.url_changes("https://kktix.com/users/sign_in")
+        )
+        print("✓ 登入成功")
+    except TimeoutException:
+        wait_for_enter("⚠ 登入可能需要驗證碼或二次驗證，請手動完成後按 Enter")
 
 
-# 定義票種優先順序（根據 Global Interpark 常見票種）
-priority_order = ["VIP", "R", "S", "A"]
-
-try:
-    # 打開網站
-    driver.get("https://www.globalinterpark.com/en/product/25005869")
-
-    # 確保頁面加載完成
-    WebDriverWait(driver, 5).until(
+def go_to_ticket_page(driver):
+    print(f"→ 前往購票頁：{TICKET_URL}")
+    driver.get(TICKET_URL)
+    WebDriverWait(driver, 10).until(
         lambda d: d.execute_script("return document.readyState") == "complete"
     )
-    print("頁面加載完成")
 
-    # 檢查是否需要登錄
-    time.sleep(50)
 
-    # 點擊「Next Step」按鈕
-    try:
-        next_step_button = WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.ID, "LargeNextBtnLink"))
-        )
-        driver.execute_script("fnNextStep('P');")
-        print("已點擊 Next Step 按鈕")
-    except TimeoutException:
-        print("未找到 Next Step 按鈕，可能是售票已結束或頁面結構變化")
-        raise Exception("無法進入票種選擇頁面")
-
-    # 等待票種選擇區域出現
-    try:
-        WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located((By.ID, "divBookSeat"))
-        )
-        print("票種選擇區域已出現")
-    except TimeoutException:
-        print("未找到票種選擇區域（divBookSeat），可能需要選擇場次或售票已結束")
-        raise Exception("無法進入票種選擇區域")
-
-    # 自動偵測票種（假設結構）
-    print("開始偵測票種...")
-    try:
-        ticket_units = WebDriverWait(driver, 5).until(
-            EC.presence_of_all_elements_located(
-                (By.XPATH, '//div[contains(@class, "ticket-unit")]')
+def wait_for_sale_open(driver):
+    """不斷刷新直到購票按鈕可點擊"""
+    print("→ 等待開賣...")
+    attempt = 0
+    while True:
+        attempt += 1
+        try:
+            # KKTIX 開賣後 register 按鈕會變成可點擊
+            btn = WebDriverWait(driver, 3).until(
+                EC.element_to_be_clickable(
+                    (By.CSS_SELECTOR, "a.btn-register, a[href*='registrations/new']")
+                )
             )
+            print(f"✓ 偵測到開賣！(第{attempt}次)")
+            return btn
+        except TimeoutException:
+            print(f"  尚未開賣，重新整理... ({attempt})", end="\r")
+            driver.refresh()
+            time.sleep(0.5)
+
+
+def select_tickets(driver):
+    """選票種和數量 — 對應 KKTIX 用 +/- 按鈕的真實頁面結構"""
+    wait = WebDriverWait(driver, 10)
+    print("→ 選票中...")
+
+    # 等票種 row 出現
+    wait.until(
+        EC.presence_of_element_located(
+            (By.CSS_SELECTOR, "table.ticket-type-list tr, .ticket-unit")
         )
-        print(f"找到 {len(ticket_units)} 個票種")
+    )
+    time.sleep(0.3)
 
-        ticket_options = []
-        for unit in ticket_units:
-            ticket_name = unit.find_element(By.CLASS_NAME, "ticket-name").text.strip()
-            ticket_quantity_input = unit.find_element(By.CLASS_NAME, "ticket-quantity")
-            ticket_options.append(
-                {"name": ticket_name, "quantity_input": ticket_quantity_input}
-            )
-    except TimeoutException:
-        print("未找到票種選擇區域，可能是售票未開始或結構不同")
-        raise Exception("無法偵測票種")
+    ticket_rows = driver.find_elements(
+        By.CSS_SELECTOR, "table.ticket-type-list tr, .ticket-unit"
+    )
+    print(f"  找到 {len(ticket_rows)} 個票種列")
 
-    # 按優先順序選擇票種
     selected = False
-    for priority in priority_order:
-        for option in ticket_options:
-            if priority in option["name"]:
-                print(f"嘗試選擇票種：{option['name']}")
+    for keyword in TICKET_KEYWORDS:
+        for row in ticket_rows:
+            row_text = row.text
+            if (
+                keyword in row_text
+                and "售完" not in row_text
+                and "Sold Out" not in row_text
+            ):
+                print(f"  嘗試選票：{row_text[:40]}...")
                 try:
-                    option["quantity_input"].clear()
-                    option["quantity_input"].send_keys("2")
-                    print(f"已為 {option['name']} 輸入 2 張票")
+                    # KKTIX + 按鈕：class="btn-default plus"，ng-click="quantityBtnClick(1)"
+                    plus_btn = row.find_element(
+                        By.CSS_SELECTOR,
+                        "button.plus, button[ng-click*='quantityBtnClick(1)']",
+                    )
+                    for _ in range(TICKET_QTY):
+                        plus_btn.click()
+                        time.sleep(0.15)
+                    print(f"  ✓ 已點 + 按鈕 {TICKET_QTY} 次")
                     selected = True
                     break
-                except WebDriverException as e:
-                    print(f"選擇 {option['name']} 失敗：{str(e)}")
+                except Exception as e:
+                    print(f"  ✗ 選票失敗：{e}")
         if selected:
             break
 
     if not selected:
-        raise Exception("所有優先票種均不可用")
+        wait_for_enter("⚠ 找不到符合關鍵字的可用票種，請手動選票後按 Enter")
 
-    # 點擊提交按鈕（假設）
+
+def handle_captcha(driver):
+    """偵測驗證碼並暫停讓使用者手動處理"""
     try:
-        submit_button = WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.CLASS_NAME, "btn-confirm"))
+        WebDriverWait(driver, 3).until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, ".g-recaptcha, iframe[src*='recaptcha'], #recaptcha")
+            )
         )
-        submit_button.click()
-        print("已點擊提交按鈕")
+        wait_for_enter("🔔 偵測到驗證碼！請手動完成驗證後按 Enter")
     except TimeoutException:
-        print("未找到提交按鈕，可能是結構不同")
-        raise Exception("無法提交訂單")
+        pass  # 沒有驗證碼，繼續
 
-    # 檢查驗證碼
+
+def submit_and_checkout(driver):
+    wait = WebDriverWait(driver, 10)
+    print("→ 提交訂單...")
+
+    # 點下一步 / 確認
     try:
-        captcha = WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located((By.ID, "captcha"))
+        next_btn = wait.until(
+            EC.element_to_be_clickable(
+                (
+                    By.CSS_SELECTOR,
+                    "input[type='submit'], button[type='submit'], .btn-next, #submit-btn",
+                )
+            )
         )
-        print("檢測到驗證碼！發出提醒...")
-        play_alert_sound()
-        input("請輸入驗證碼後按 Enter 繼續...")
-        submit_captcha = driver.find_element(By.ID, "submit")
-        submit_captcha.click()
-        print("已提交驗證碼")
+        next_btn.click()
+        print("✓ 已點擊提交")
     except TimeoutException:
-        print("未檢測到驗證碼，繼續流程...")
+        wait_for_enter("⚠ 找不到提交按鈕，請手動點擊後按 Enter")
 
-    # 等待結帳頁面
-    WebDriverWait(driver, 5).until(EC.url_contains("payment"))
-    print("成功進入結帳頁面！")
+    # 偵測驗證碼
+    handle_captcha(driver)
 
-except Exception as e:
-    print(f"發生錯誤：{e}")
+    # 等待進入結帳頁
+    try:
+        WebDriverWait(driver, 15).until(
+            EC.any_of(
+                EC.url_contains("payment"),
+                EC.url_contains("checkout"),
+                EC.url_contains("order"),
+            )
+        )
+        beep(5)
+        print("\n🎉 成功進入結帳頁！請盡快完成付款！")
+    except TimeoutException:
+        wait_for_enter("⚠ 未自動跳轉結帳頁，請確認目前狀態後按 Enter")
 
-finally:
-    driver.quit()
+
+# ============================================================
+#  主程式
+# ============================================================
+
+if __name__ == "__main__":
+    driver = setup_driver()
+    try:
+        # 1. 登入
+        login(driver)
+        go_to_ticket_page(driver)
+
+        # 2. 前往購票頁
+
+        # 3. 等開賣 + 點擊購票按鈕
+        register_btn = wait_for_sale_open(driver)
+        register_btn.click()
+        time.sleep(1)
+
+        # 4. 選票
+        select_tickets(driver)
+
+        # 5. 送出 + 結帳
+        submit_and_checkout(driver)
+
+        # 6. 保持瀏覽器開啟讓使用者完成付款
+        input("\n按 Enter 關閉瀏覽器...")
+
+    except Exception as e:
+        print(f"\n❌ 發生錯誤：{e}")
+        input("按 Enter 關閉...")
+    finally:
+        driver.quit()
